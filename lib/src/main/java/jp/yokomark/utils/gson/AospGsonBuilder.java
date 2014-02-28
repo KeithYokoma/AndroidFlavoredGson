@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import android.net.Uri;
 
 import java.io.File;
+import java.lang.reflect.Modifier;
 import java.util.Date;
 
 import jp.yokomark.utils.gson.adapter.DefaultFieldNamingStrategy;
@@ -44,6 +45,7 @@ public final class AospGsonBuilder {
     public static GsonBuilder buildInternalUseGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
         return builder
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
                 .setFieldNamingStrategy(DefaultFieldNamingStrategy.SNAKE_CASE)
                 .registerTypeAdapterFactory(EnumTypeAdapterFactory.CAMEL_CASE)
                 .registerTypeAdapter(Date.class, new DateToLongAdapter())
@@ -66,6 +68,7 @@ public final class AospGsonBuilder {
     public static GsonBuilder buildExternalUseGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
         return builder
+                .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
                 .setFieldNamingStrategy(DefaultFieldNamingStrategy.SNAKE_CASE)
                 .registerTypeAdapterFactory(EnumTypeAdapterFactory.LOWER_CASE_SNAKE)
                 .registerTypeAdapter(Boolean.class, new BooleanAdapter());
