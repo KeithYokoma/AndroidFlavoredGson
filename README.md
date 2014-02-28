@@ -31,6 +31,13 @@ enum SomeEnum {
 }
 ```
 
+## Acknowledgement
+
+This library using the following libraries
+
+- Robolectric
+- Google Gson
+
 ## License
 
 ```
