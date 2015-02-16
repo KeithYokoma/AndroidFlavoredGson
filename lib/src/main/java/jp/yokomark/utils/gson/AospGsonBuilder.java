@@ -18,9 +18,6 @@ package jp.yokomark.utils.gson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import android.net.Uri;
-
-import java.io.File;
 import java.lang.reflect.Modifier;
 import java.util.Date;
 
@@ -28,8 +25,6 @@ import jp.yokomark.utils.gson.adapter.DefaultFieldNamingStrategy;
 import jp.yokomark.utils.gson.adapter.EnumTypeAdapterFactory;
 import jp.yokomark.utils.gson.adapter.external.BooleanAdapter;
 import jp.yokomark.utils.gson.adapter.internal.DateToLongAdapter;
-import jp.yokomark.utils.gson.adapter.internal.FileAbsolutePathAdapter;
-import jp.yokomark.utils.gson.adapter.internal.UriAdapter;
 
 /**
  * {@link com.google.gson.Gson} converter builder that AOSP's code guide line applied.
@@ -46,46 +41,24 @@ public final class AospGsonBuilder {
     }
 
     /**
-     * {@link com.google.gson.Gson} to use at application internal serialization and de-serialization.
-     * @return a {@link com.google.gson.Gson} object.
-     */
-    public static Gson buildInternalUseGson() {
-        return buildInternalUseGsonBuilder().create();
-    }
-
-    /**
-     * {@link com.google.gson.GsonBuilder} to use at application internal serialization and de-serialization.
-     * @return a {@link com.google.gson.GsonBuilder} object.
-     */
-    public static GsonBuilder buildInternalUseGsonBuilder() {
-        GsonBuilder builder = new GsonBuilder();
-        return builder
-                .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
-                .setFieldNamingStrategy(DefaultFieldNamingStrategy.SNAKE_CASE)
-                .registerTypeAdapterFactory(EnumTypeAdapterFactory.CAMEL_CASE)
-                .registerTypeAdapter(Date.class, new DateToLongAdapter())
-                .registerTypeAdapter(File.class, new FileAbsolutePathAdapter())
-                .registerTypeAdapter(Uri.class, new UriAdapter());
-    }
-
-    /**
      * {@link com.google.gson.Gson} to use at JSON-RPC serialization and de-serialization.
      * @return a {@link com.google.gson.Gson} object.
      */
-    public static Gson buildExternalUseGson() {
-        return buildExternalUseGsonBuilder().create();
+    public static Gson build() {
+        return buildUpon().create();
     }
 
     /**
      * {@link com.google.gson.GsonBuilder} to use at JSON-RPC serialization and de-serialization.
      * @return a {@link com.google.gson.GsonBuilder} object.
      */
-    public static GsonBuilder buildExternalUseGsonBuilder() {
+    public static GsonBuilder buildUpon() {
         GsonBuilder builder = new GsonBuilder();
         return builder
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC)
                 .setFieldNamingStrategy(DefaultFieldNamingStrategy.SNAKE_CASE)
                 .registerTypeAdapterFactory(EnumTypeAdapterFactory.LOWER_CASE_SNAKE)
-                .registerTypeAdapter(Boolean.class, new BooleanAdapter());
+                .registerTypeAdapter(Boolean.class, new BooleanAdapter())
+                .registerTypeAdapter(Date.class, new DateToLongAdapter());
     }
 }

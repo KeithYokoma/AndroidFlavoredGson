@@ -19,7 +19,7 @@ public class AospGsonBuilderTest {
 
     @Test
     public void buildExternalUseGson()  throws Exception {
-        Gson gson = AospGsonBuilder.buildExternalUseGson();
+        Gson gson = AospGsonBuilder.build();
         Assert.assertNotNull(gson);
     }
 
