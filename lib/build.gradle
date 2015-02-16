@@ -1,4 +1,4 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 apply plugin: 'robolectric'
 
 android {
@@ -18,12 +18,10 @@ android {
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.3'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile 'com.squareup:fest-android:1.0.+' // FEST(Fixtures for Easy Software Testing) を Android で利用するためのライブラリ
-    androidTestCompile('junit:junit:4.11') {
-        exclude module: 'hamcrest-core'
-    }
+    androidTestCompile 'com.squareup:fest-android:1.0.8' // FEST(Fixtures for Easy Software Testing) を Android で利用するためのライブラリ
+    androidTestCompile('junit:junit:4.11')
     androidTestCompile('org.robolectric:robolectric:2.4') {
         exclude module: 'classworlds'
         exclude module: 'commons-logging'
